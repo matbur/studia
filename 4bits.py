@@ -9,11 +9,8 @@ def random_sequence(n=4):
 
 
 def u2(s):
-    l = map(int, reversed(s))
-    r = -l.pop() * 2 ** len(l)
-    for i, v in enumerate(l):
-        r += v * 2 ** i
-    return r
+    r = -int(s[0]) * 2 ** len(s) / 2
+    return r + int(s[1:], 2)
 
 
 def prepare_dict(s):
