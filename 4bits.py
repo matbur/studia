@@ -26,7 +26,7 @@ def prepare_dict(s):
 
 
 def guess_numbers(d):
-    print ' ' * 6 + d.pop('bin')
+    print ' ' * 5, d.pop('bin')
     for k, v in d.items():
         a = raw_input('{:>4}: '.format(k))
         if a != str(v):
