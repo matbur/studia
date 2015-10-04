@@ -15,15 +15,15 @@ def u2(s):
 
 def prepare_dict(s):
     return dict(
-        bin=s,
-        dec=int(s, 2),
+        seq=s,
+        bin=int(s, 2),
         u2=u2(s),
         hex=hex(int(s, 2))[2:]
     )
 
 
 def guess_numbers(d):
-    print ' ' * 5, d.pop('bin')
+    print ' ' * 5, d.pop('seq')
     for k, v in d.items():
         a = raw_input('{:>4}: '.format(k))
         if a != str(v):
