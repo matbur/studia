@@ -2,6 +2,7 @@
  * Created by matbur on 07.12.15.
  */
 
+import javax.swing.*;
 import java.util.Comparator;
 import java.util.List;
 
@@ -46,7 +47,11 @@ public class Student {
         return new Student(nazwisko, imie, indeks);
     }
 
-    public static String pokazListeStudentow(List<Student> studentList) {
+    public static String pokazStudentow(List<Student> studentList) {
+        if (studentList.isEmpty()) {
+            return "Brak studentow";
+        }
+
         String string = "";
         for (int i = 0; i < studentList.size(); i++) {
             string += String.format("%d) %s\n", i + 1, studentList.get(i));
@@ -55,15 +60,34 @@ public class Student {
         return string;
     }
 
-    public static Student wybierzStudenta(List<Student> studentList) {
-        String menu = "Podaj nr studenta:\n" + pokazListeStudentow(studentList);
-        int n = PobierzDane.pobierzInt(menu) - 1;
+    public static void wyswietlStudentow(List<Student> studentList) {
+        JOptionPane.showMessageDialog(null,
+                "Lista studentow:\n" + Student.pokazStudentow(studentList));
+    }
 
-        if (n < 0 || n >= studentList.size()) {
-            return wybierzStudenta(studentList);
+    public static Student wybierzStudenta(List<Student> studentList) {
+        if (studentList.isEmpty()) {
+            return null;
         }
 
-        return studentList.get(n);
+        String menu = "Podaj nr studenta:\n" + pokazStudentow(studentList) + "\n0 - powrot";
+        int n = PobierzDane.pobierzInt(menu);
+
+        if (n == 0) {
+            return null;
+        }
+
+        try {
+            return studentList.get(n - 1);
+        } catch (java.lang.IndexOutOfBoundsException err) {
+            return wybierzStudenta(studentList);
+        }
+    }
+
+    public static Student usunStudenta(List<Student> studentList) {
+        Student student = wybierzStudenta(studentList);
+        studentList.remove(student);
+        return student;
     }
 
     public String getImie() {
@@ -90,9 +114,13 @@ public class Student {
         this.indeks = indeks;
     }
 
+    public boolean equals(Student student) {
+        return nazwisko.equals(student.nazwisko) && imie.equals(student.imie) && indeks == student.indeks;
+    }
+
     @Override
     public String toString() {
-        return String.format("%s %s, %d", nazwisko, imie, indeks);
+        return String.format("%s %s (%d)", nazwisko, imie, indeks);
     }
 }
 
