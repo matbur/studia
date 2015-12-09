@@ -2,9 +2,7 @@
  * Created by matbur on 07.12.15.
  */
 
-import javax.swing.*;
 import java.util.Comparator;
-import java.util.List;
 
 public class Student {
     private String imie;
@@ -37,57 +35,6 @@ public class Student {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.indeks = indeks;
-    }
-
-    public static Student nowyStudent() {
-        String nazwisko = PobierzDane.pobierzString("Podaj nazwisko studenta:");
-        String imie = PobierzDane.pobierzString("Podaj imie studenta:");
-        int indeks = PobierzDane.pobierzInt("Podaj nr indeksu studenta " + nazwisko + " " + imie + ":");
-
-        return new Student(nazwisko, imie, indeks);
-    }
-
-    public static String pokazStudentow(List<Student> studentList) {
-        if (studentList.isEmpty()) {
-            return "Brak studentow";
-        }
-
-        String string = "";
-        for (int i = 0; i < studentList.size(); i++) {
-            string += String.format("%d) %s\n", i + 1, studentList.get(i));
-        }
-
-        return string;
-    }
-
-    public static void wyswietlStudentow(List<Student> studentList) {
-        JOptionPane.showMessageDialog(null,
-                "Lista studentow:\n" + Student.pokazStudentow(studentList));
-    }
-
-    public static Student wybierzStudenta(List<Student> studentList) {
-        if (studentList.isEmpty()) {
-            return null;
-        }
-
-        String menu = "Podaj nr studenta:\n" + pokazStudentow(studentList) + "\n0 - powrot";
-        int n = PobierzDane.pobierzInt(menu);
-
-        if (n == 0) {
-            return null;
-        }
-
-        try {
-            return studentList.get(n - 1);
-        } catch (java.lang.IndexOutOfBoundsException err) {
-            return wybierzStudenta(studentList);
-        }
-    }
-
-    public static Student usunStudenta(List<Student> studentList) {
-        Student student = wybierzStudenta(studentList);
-        studentList.remove(student);
-        return student;
     }
 
     public String getImie() {

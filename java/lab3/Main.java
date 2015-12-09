@@ -2,27 +2,25 @@
  * Created by matbur on 07.12.15.
  */
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Main {
-    List<Student> studentList;
-    List<Grupa> grupaList;
-    List<Zapis> zapisList;
+    private StudentList studentList;
+    private GrupaList grupaList;
+    private ZapisList zapisList;
 
     public Main() {
-        studentList = new ArrayList<>();
-        grupaList = new ArrayList<>();
-        zapisList = new LinkedList<>();
+        studentList = new StudentList();
+        grupaList = new GrupaList();
+        zapisList = new ZapisList();
     }
 
     public static void main(String[] args) {
-        pokazMenu(new Main());
+        pokazMenu();
     }
 
-    public static void pokazMenu(Main m) {
+    public static void pokazMenu() {
+        Main m = new Main();
         String menu = "M E N U\n" +
                 "11 - dodaj nowego studenta\n" +
                 "12 - usun studenta\n" +
@@ -41,76 +39,51 @@ public class Main {
         while (true) {
             switch (PobierzDane.pobierzInt(menu)) {
                 case 11:
-                    m.studentList.add(Student.nowyStudent());
-                    Student.wyswietlStudentow(m.studentList);
+                    m.studentList.dodajNowy();
+                    m.studentList.wyswietl();
                     break;
                 case 12:
-                    Zapis.usunZapis(m.zapisList, Student.usunStudenta(m.studentList));
-                    Student.wyswietlStudentow(m.studentList);
+                    m.zapisList.usun(m.studentList.usun());
+                    m.studentList.wyswietl();
                     break;
                 case 13:
                     Collections.sort(m.studentList, new StudentComparable());
-                    Student.wyswietlStudentow(m.studentList);
+                    m.studentList.wyswietl();
                     break;
                 case 14:
-                    Student.wyswietlStudentow(m.studentList);
+                    m.studentList.wyswietl();
                     break;
                 case 21:
-                    m.grupaList.add(Grupa.nowaGrupa());
-                    Grupa.wyswietlGrupy(m.grupaList);
+                    m.grupaList.dodajNowy();
+                    m.grupaList.wyswietl();
                     break;
                 case 22:
-                    Zapis.usunZapis(m.zapisList, Grupa.usunGrupe(m.grupaList));
-                    Grupa.wyswietlGrupy(m.grupaList);
+                    m.zapisList.usun(m.grupaList.usun());
+                    m.grupaList.wyswietl();
                     break;
                 case 23:
                     Collections.sort(m.grupaList, new GrupaComparable());
-                    Grupa.wyswietlGrupy(m.grupaList);
+                    m.grupaList.wyswietl();
                     break;
                 case 24:
-                    Grupa.wyswietlGrupy(m.grupaList);
+                    m.grupaList.wyswietl();
                     break;
                 case 31:
-                    Zapis zapis = Zapis.nowyZapis(m.studentList, m.grupaList, m.zapisList);
-                    if (zapis != null) {
-                        m.zapisList.add(zapis);
-                    }
+                    m.zapisList.dodajNowy(m.studentList, m.grupaList);
                     break;
                 case 32:
-                    Zapis.usunZapis(m.zapisList);
+                    m.zapisList.usun();
                     break;
                 case 33:
-                    Zapis.wyswieltZapisyStudentow(m.studentList, m.zapisList);
+                    m.zapisList.wyswieltStudentow(m.studentList);
                     break;
                 case 34:
-                    Zapis.wyswieltZapisyGrup(m.grupaList, m.zapisList);
+                    m.zapisList.wyswieltGrupy(m.grupaList);
                     break;
                 case 0:
                     System.exit(0);
             }
         }
-    }
-
-    public static void test() {
-        Main m = new Main();
-        m.studentList.add(new Student(1));
-        m.studentList.add(new Student(2));
-        m.studentList.add(new Student(3));
-        m.studentList.add(new Student(4));
-
-        m.grupaList.add(new Grupa("gr1"));
-        m.grupaList.add(new Grupa("gr2"));
-        m.grupaList.add(new Grupa("gr3"));
-
-        System.out.println(m);
-
-        m.zapisList.add(new Zapis(m.studentList.get(0), m.grupaList.get(0)));
-        m.zapisList.add(new Zapis(m.studentList.get(1), m.grupaList.get(0)));
-        m.zapisList.add(new Zapis(m.studentList.get(0), m.grupaList.get(1)));
-
-        System.out.println(m);
-        Zapis.usunZapis(m.zapisList);
-        System.out.println(m);
     }
 
     @Override
