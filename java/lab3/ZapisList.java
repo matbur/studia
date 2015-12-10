@@ -2,33 +2,35 @@
  * Created by matbur on 09.12.15.
  */
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 public class ZapisList extends LinkedList<Zapis> {
-    public void dodajNowy(StudentList studentList, GrupaList grupaList) {
+    public void dodajNowy(StudentList studentList, GrupaList grupaList, JFrame frame) {
         if (studentList.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "brak studentow");
-            return;
-        } else if (grupaList.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "brak grup");
+            JOptionPane.showMessageDialog(frame, "brak studentow");
             return;
         }
 
-        Student student = studentList.wybierz();
+        if (grupaList.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "brak grup");
+            return;
+        }
+
+        Student student = studentList.wybierz(frame);
         if (student == null) {
             return;
         }
 
-        Grupa grupa = grupaList.wybierz();
+        Grupa grupa = grupaList.wybierz(frame);
         if (grupa == null) {
             return;
         }
 
         Zapis zapis = new Zapis(student, grupa);
         if (contains(zapis)) {
-            JOptionPane.showMessageDialog(null, "Taki zapis juz istnieje");
+            JOptionPane.showMessageDialog(frame, "Taki zapis juz istnieje");
             return;
         }
 
@@ -38,7 +40,9 @@ public class ZapisList extends LinkedList<Zapis> {
     public String pokazStudentow(StudentList studentList) {
         if (studentList.isEmpty()) {
             return "brak studentow";
-        } else if (isEmpty()) {
+        }
+
+        if (isEmpty()) {
             return "brak zapisow";
         }
 
@@ -52,17 +56,20 @@ public class ZapisList extends LinkedList<Zapis> {
             }
             string += "\n";
         }
+
         return string;
     }
 
-    public void wyswieltStudentow(StudentList studentList) {
-        JOptionPane.showMessageDialog(null, pokazStudentow(studentList));
+    public void wyswieltStudentow(StudentList studentList, JFrame frame) {
+        JOptionPane.showMessageDialog(frame, pokazStudentow(studentList));
     }
 
     public String pokazGrupy(GrupaList grupaList) {
         if (grupaList.isEmpty()) {
             return "brak grup";
-        } else if (isEmpty()) {
+        }
+
+        if (isEmpty()) {
             return "brak zapisow";
         }
 
@@ -76,39 +83,40 @@ public class ZapisList extends LinkedList<Zapis> {
             }
             string += "\n";
         }
+
         return string;
     }
 
-    public void wyswieltGrupy(GrupaList grupaList) {
-        JOptionPane.showMessageDialog(null, pokazGrupy(grupaList));
+    public void wyswieltGrupy(GrupaList grupaList, JFrame frame) {
+        JOptionPane.showMessageDialog(frame, pokazGrupy(grupaList));
     }
 
-    public Zapis wybierz() {
+    public Zapis wybierz(JFrame frame) {
         if (isEmpty()) {
-            JOptionPane.showMessageDialog(null, "brak zapisow");
+            JOptionPane.showMessageDialog(frame, "brak zapisow");
             return null;
         }
 
         String menu = "Podaj nr grupy:\n" + this + "\n0 - powrot";
-        int n = PobierzDane.pobierzInt(menu);
+        int n = PobierzDane.pobierzInt(menu, frame);
 
         if (n == 0) {
-            System.out.println("null");
             return null;
         }
 
         try {
             return get(n - 1);
         } catch (java.lang.IndexOutOfBoundsException e) {
-            return wybierz();
+            return wybierz(frame);
         }
     }
 
-    public void usun() {
-        Zapis zapis = wybierz();
+    public void usun(JFrame frame) {
+        Zapis zapis = wybierz(frame);
         if (zapis == null) {
             return;
         }
+
         remove(zapis);
     }
 
@@ -123,6 +131,7 @@ public class ZapisList extends LinkedList<Zapis> {
             if (zapis.getStudent().equals(student))
                 toRemoveZapisList.add(zapis);
         }
+
         removeAll(toRemoveZapisList);
     }
 
@@ -137,6 +146,7 @@ public class ZapisList extends LinkedList<Zapis> {
             if (zapis.getGrupa().equals(grupa))
                 toRemoveZapisList.add(zapis);
         }
+
         removeAll(toRemoveZapisList);
     }
 
@@ -147,6 +157,7 @@ public class ZapisList extends LinkedList<Zapis> {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -160,6 +171,7 @@ public class ZapisList extends LinkedList<Zapis> {
         for (int i = 0; i < size(); i++) {
             string += String.format("%d) %s\n", i + 1, get(i));
         }
+
         return string;
     }
 }

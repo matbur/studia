@@ -16,14 +16,8 @@ public abstract class PobierzDane {
      * @param pytanie
      * @return pobrany lancuch znakow
      */
-    public static String pobierzString(String pytanie) {
-        String odp = JOptionPane.showInputDialog(null, pytanie);
-
-        if (odp == null) {
-            return PobierzDane.pobierzString(pytanie);
-        }
-
-        return odp;
+    public static String pobierzString(String pytanie, JFrame frame) {
+        return JOptionPane.showInputDialog(frame, pytanie);
     }
 
     /**
@@ -32,17 +26,17 @@ public abstract class PobierzDane {
      * @param pytanie
      * @return pobrana liczba
      */
-    public static double pobierzDouble(String pytanie) {
-        String odp = PobierzDane.pobierzString(pytanie);
+    public static double pobierzDouble(String pytanie, JFrame frame) {
+        String odp = PobierzDane.pobierzString(pytanie, frame);
         double odpowiedz;
 
         try {
-            odpowiedz = Double.parseDouble(odp);
+            return Double.parseDouble(odp);
         } catch (NumberFormatException err) {
-            odpowiedz = PobierzDane.pobierzDouble(pytanie);
+            return PobierzDane.pobierzDouble(pytanie, frame);
+        } catch (NullPointerException err) {
+            return 0;
         }
-
-        return odpowiedz;
     }
 
     /**
@@ -51,7 +45,7 @@ public abstract class PobierzDane {
      * @param pytanie
      * @return pobrany int
      */
-    public static int pobierzInt(String pytanie) {
-        return (int) PobierzDane.pobierzDouble(pytanie);
+    public static int pobierzInt(String pytanie, JFrame frame) {
+        return (int) PobierzDane.pobierzDouble(pytanie, frame);
     }
 }
