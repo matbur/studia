@@ -2,7 +2,8 @@
  * Created by matbur on 09.12.15.
  */
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
 public class StudentList extends ArrayList<Student> {

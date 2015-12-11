@@ -2,7 +2,9 @@
  * Created by matbur on 12/1/15.
  */
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import java.awt.*;
 
 /**
  * Klasa jest wrapperem do JOptionPane
@@ -28,7 +30,6 @@ public abstract class PobierzDane {
      */
     public static double pobierzDouble(String pytanie, JFrame frame) {
         String odp = PobierzDane.pobierzString(pytanie, frame);
-        double odpowiedz;
 
         try {
             return Double.parseDouble(odp);

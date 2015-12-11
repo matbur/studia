@@ -2,7 +2,8 @@
  * Created by matbur on 09.12.15.
  */
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -112,12 +113,7 @@ public class ZapisList extends LinkedList<Zapis> {
     }
 
     public void usun(JFrame frame) {
-        Zapis zapis = wybierz(frame);
-        if (zapis == null) {
-            return;
-        }
-
-        remove(zapis);
+        remove(wybierz(frame));
     }
 
     public void usun(Student student) {
