@@ -7,32 +7,39 @@ import java.awt.*;
 
 public class Canvas extends JPanel {
     int w, h;
+    boolean isReady;
 
-    public Canvas(int w, int h) {
-        this.w = w;
-        this.h = h;
+    public Canvas() {
+        isReady = false;
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
-        int W = getWidth() / w;
-        int H = getHeight() / h;
+        if (isReady) {
+            int W = getWidth() / w;
+            int H = getHeight() / h;
 
-        synchronized (Main.leaf.cells) {
             for (int i = 0; i < h; i++) {
                 for (int j = 0; j < w; j++) {
-                    g.setColor(Main.leaf.cells[i][j].getColor());
-                    g.fillRect(j * W, i * H, W, H);
+                    synchronized (Main.cells.cells[i][j]) {
+                        g.setColor(Main.cells.cells[i][j].getColor());
+                        g.fillRect(j * W, i * H, W, H);
+                    }
                 }
             }
             g.setColor(Color.ORANGE);
             for (Snail snail : Main.snails) {
-                g.fillOval(snail.x * W, snail.y * H, W, H);
+                synchronized (snail) {
+                    g.fillOval(snail.x * W, snail.y * H, W, H);
+                }
             }
-//            g.fillOval(Main.snail.x * W, Main.snail.y * H, W, H);
         }
+    }
 
+    public void updateWH(){
+        w = Main.w;
+        h = Main.h;
     }
 }

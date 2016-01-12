@@ -4,42 +4,27 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class Frame extends JFrame implements ActionListener {
+public class Frame extends JFrame {
     Canvas canvas;
-    JButton startButton;
+    Setup setup;
 
-    public Frame(int w, int h) {
-        super("ramka");
+    public Frame() {
+        super("SNAILS");
 
-        canvas = new Canvas(w, h);
+        int setupWidth = 150;
+        setup = new Setup(setupWidth);
+        setup.setPreferredSize(new Dimension(setupWidth, 600));
+        add(setup, BorderLayout.LINE_START);
+
+        canvas = new Canvas();
         canvas.setPreferredSize(new Dimension(600, 600));
         add(canvas);
 
-        startButton = new JButton("START");
-        startButton.addActionListener(this);
-        add(startButton);
 
-        setSize(700, 650);
+        pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLayout(new FlowLayout());
 
         setVisible(true);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-
-        if (source == startButton) {
-            if (Main.leaf.isAlive()) {
-                JOptionPane.showMessageDialog(this, "dziala");
-            } else {
-                Main.leaf.start();
-                Main.snails.forEach(Snail::start);
-            }
-        }
     }
 }

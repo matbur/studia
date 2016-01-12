@@ -6,31 +6,32 @@ import javax.swing.*;
 import java.util.Random;
 
 public class Main {
-    static Leaf leaf;
-    static Frame frame;
+    static int w;
+    static int h;
+    static int n;
+    static Cells cells;
     static Snails snails;
+    static Sun sun;
+    static Frame frame;
 
     private static Random r;
 
     public static void main(String[] args) {
         r = new Random();
 
-        int w = 100;
-        int h = 100;
-        int n = 100;
-
-        leaf = new Leaf(w, h);
-        snails = new Snails(w, h, n);
-
         SwingUtilities.invokeLater(() -> {
-            frame = new Frame(w, h);
+            frame = new Frame();
         });
 
-        leaf.start();
-        snails.forEach(Snail::start);
     }
 
-    static public int getRandom(int max) {
+    synchronized static public int getRandom(int max) {
         return r.nextInt(max);
+    }
+
+    static void createAll() {
+        cells = new Cells(w, h);
+        snails = new Snails(w, h, n);
+        sun = new Sun();
     }
 }

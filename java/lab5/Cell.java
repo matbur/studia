@@ -51,14 +51,4 @@ public class Cell {
     public void toggleIsSnail() {
         isSnail = !isSnail;
     }
-
-    @Override
-    public String toString() {
-        return "Cell{" +
-                "color=" + color +
-                ", value=" + value +
-                ", max=" + max +
-                ", isSnail=" + isSnail +
-                '}';
-    }
 }
