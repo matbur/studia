@@ -6,11 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Canvas extends JPanel {
-    int h, w;
+    int w, h;
 
-    public Canvas(int h, int w) {
-        this.h = h;
+    public Canvas(int w, int h) {
         this.w = w;
+        this.h = h;
     }
 
     @Override
@@ -22,12 +22,16 @@ public class Canvas extends JPanel {
 
         synchronized (Main.leaf.cells) {
             for (int i = 0; i < h; i++) {
-                System.out.println(H * i);
                 for (int j = 0; j < w; j++) {
-                    g.setColor(Main.leaf.cells[i][j].color);
+                    g.setColor(Main.leaf.cells[i][j].getColor());
                     g.fillRect(j * W, i * H, W, H);
                 }
             }
+            g.setColor(Color.ORANGE);
+            for (Snail snail : Main.snails) {
+                g.fillOval(snail.x * W, snail.y * H, W, H);
+            }
+//            g.fillOval(Main.snail.x * W, Main.snail.y * H, W, H);
         }
 
     }

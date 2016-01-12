@@ -11,10 +11,10 @@ public class Frame extends JFrame implements ActionListener {
     Canvas canvas;
     JButton startButton;
 
-    public Frame(int h, int w) {
+    public Frame(int w, int h) {
         super("ramka");
 
-        canvas = new Canvas(h, w);
+        canvas = new Canvas(w, h);
         canvas.setPreferredSize(new Dimension(600, 600));
         add(canvas);
 
@@ -38,6 +38,7 @@ public class Frame extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "dziala");
             } else {
                 Main.leaf.start();
+                Main.snails.forEach(Snail::start);
             }
         }
     }

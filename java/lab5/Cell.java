@@ -3,15 +3,16 @@
  */
 
 import java.awt.*;
-import java.util.Random;
 
 public class Cell {
-    Color color;
-    int value, max;
+    private Color color;
+    private int value, max;
+    private boolean isSnail;
 
     public Cell() {
         max = 9;
-        value = new Random().nextInt(max);
+        isSnail = false;
+        value = Main.getRandom(max);
         updateColor();
     }
 
@@ -33,5 +34,31 @@ public class Cell {
 
     public void updateColor() {
         color = new Color(0, (int) (255. / max * value), 0);
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public boolean isSnail() {
+        return isSnail;
+    }
+
+    public void toggleIsSnail() {
+        isSnail = !isSnail;
+    }
+
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "color=" + color +
+                ", value=" + value +
+                ", max=" + max +
+                ", isSnail=" + isSnail +
+                '}';
     }
 }

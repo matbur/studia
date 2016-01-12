@@ -3,18 +3,34 @@
  */
 
 import javax.swing.*;
+import java.util.Random;
 
 public class Main {
     static Leaf leaf;
     static Frame frame;
-    static int w, h, n;
+    static Snails snails;
+
+    private static Random r;
 
     public static void main(String[] args) {
-        w = 20;
-        h = 10;
-        leaf = new Leaf(h, w);
+        r = new Random();
+
+        int w = 100;
+        int h = 100;
+        int n = 100;
+
+        leaf = new Leaf(w, h);
+        snails = new Snails(w, h, n);
+
         SwingUtilities.invokeLater(() -> {
-            frame = new Frame(h, w);
+            frame = new Frame(w, h);
         });
+
+        leaf.start();
+        snails.forEach(Snail::start);
+    }
+
+    static public int getRandom(int max) {
+        return r.nextInt(max);
     }
 }
