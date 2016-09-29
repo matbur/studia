@@ -1,0 +1,2 @@
+DUŻY INT
+Należy zaprojektować i zaimplementować klasę DuzyInt, której obiekty będą reprezentować bardzo dużą liczbę całkowitą (taką która przekracza zakres zmiennej int). Oprogramować podstawowe operacje na klasie oraz przeładuj najważniejsze operatory.
